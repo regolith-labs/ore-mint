@@ -1,0 +1,94 @@
+{
+    "version": "3.7.13",
+    "name": "ore_mint",
+    "instructions": [
+        {
+            "name": "mint_ore",
+            "discriminant": {
+                "type": "u8",
+                "value": 0
+            },
+            "docs": [
+                "Mints new ORE tokens to the treasury.",
+                "Authority PDA seeds: [\"authority\"]."
+            ],
+            "accounts": [
+                {
+                    "name": "signer",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "mint",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "to",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tokenProgram",
+                    "isMut": false,
+                    "isSigner": false,
+                    "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+                }
+            ],
+            "args": [
+                {
+                    "name": "amount",
+                    "type": "u64"
+                }
+            ]
+        }
+    ],
+    "accounts": [
+        {
+            "name": "Authority",
+            "discriminator": [
+                100,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "docs": [
+                "Account which has the mint authority for the ORE token."
+            ],
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "last_mint_at",
+                        "type": "u64"
+                    }
+                ]
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 0,
+            "name": "AmountTooLarge",
+            "msg": "Amount too large"
+        },
+        {
+            "code": 1,
+            "name": "MintTooFrequently",
+            "msg": "Mint too frequently"
+        }
+    ],
+    "metadata": {
+        "address": "mintzxW6Kckmeyh1h6Zfdj9QcYgCzhPSGiC8ChZ6fCx.json",
+        "origin": "steel"
+    }
+}
