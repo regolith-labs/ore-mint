@@ -1,13 +1,4 @@
-use std::{collections::HashMap, str::FromStr};
-
-use entropy_api::prelude::*;
-use jup_swap::{
-    quote::QuoteRequest,
-    swap::SwapRequest,
-    transaction_config::{DynamicSlippageSettings, TransactionConfig},
-    JupiterSwapApiClient,
-};
-use ore_api::prelude::*;
+use ore_mint_api::state::Authority;
 use solana_account_decoder::UiAccountEncoding;
 use solana_client::{
     client_error::{reqwest::StatusCode, ClientErrorKind},
@@ -16,19 +7,14 @@ use solana_client::{
     rpc_filter::{Memcmp, RpcFilterType},
 };
 use solana_sdk::{
-    address_lookup_table::{state::AddressLookupTable, AddressLookupTableAccount},
+    address_lookup_table::AddressLookupTableAccount,
     compute_budget::ComputeBudgetInstruction,
     message::{v0::Message, VersionedMessage},
-    native_token::{lamports_to_sol, LAMPORTS_PER_SOL},
     pubkey::Pubkey,
-    rent::Rent,
     signature::{read_keypair_file, Signature, Signer},
     transaction::{Transaction, VersionedTransaction},
 };
-use solana_sdk::{keccak, pubkey};
-use spl_associated_token_account::get_associated_token_address;
-use spl_token::amount_to_ui_amount;
-use steel::{AccountDeserialize, AccountMeta, Clock, Discriminator, Instruction};
+use steel::{AccountDeserialize, Clock, Discriminator, Instruction};
 
 #[tokio::main]
 async fn main() {
@@ -42,9 +28,6 @@ async fn main() {
         .expect("Missing COMMAND env var")
         .as_str()
     {
-        "init" => {
-            init(&rpc, &payer).await.unwrap();
-        }
         "authority" => {
             log_authority(&rpc).await.unwrap();
         }
@@ -53,13 +36,6 @@ async fn main() {
         }
         _ => panic!("Invalid command"),
     };
-}
-
-async fn init(
-    rpc: &RpcClient,
-    payer: &solana_sdk::signer::keypair::Keypair,
-) -> Result<(), anyhow::Error> {
-    Ok(())
 }
 
 async fn log_authority(rpc: &RpcClient) -> Result<(), anyhow::Error> {
