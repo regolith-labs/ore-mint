@@ -19,9 +19,9 @@ pub fn process_mint_ore(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramRes
     token_program.is_program(&spl_token::ID)?;
 
     // Check amount
-    let remaining_available_supply = MAX_SUPPLY.saturating_sub(mint.supply());
-    assert!(amount <= remaining_available_supply, "Amount too large");
-    assert!(amount <= ONE_ORE * 2, "Amount too large");
+    let remaining_supply = MAX_SUPPLY.saturating_sub(mint.supply());
+    assert!(amount <= remaining_supply, "Amount too large");
+    assert!(amount <= MAX_MINT_AMOUNT, "Amount too large");
 
     // Check rate of minting.
     let slots_since = clock.slot.saturating_sub(authority.last_mint_at);

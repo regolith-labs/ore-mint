@@ -1,6 +1,6 @@
 # ORE Mint
 
-ORE Mint holds the mint authority for the ORE token and implements emissions constraints.
+ORE Mint manages the mint authority of the ORE token and secures emissions rules.
 
 
 ## API

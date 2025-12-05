@@ -1,5 +1,7 @@
+mod init;
 mod mint_ore;
 
+use init::*;
 use mint_ore::*;
 
 use ore_mint_api::instruction::*;
@@ -14,6 +16,7 @@ pub fn process_instruction(
 
     match ix {
         OreMintInstruction::MintORE => process_mint_ore(accounts, data)?,
+        OreMintInstruction::Init => process_init(accounts, data)?,
     }
 
     Ok(())
