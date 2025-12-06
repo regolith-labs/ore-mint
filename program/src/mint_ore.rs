@@ -1,4 +1,5 @@
 use ore_mint_api::prelude::*;
+use spl_token::amount_to_ui_amount;
 use steel::*;
 
 /// Mints ORE to the treasury.
@@ -18,16 +19,48 @@ pub fn process_mint_ore(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramRes
     to_info.as_associated_token_account(&TREASURY_ADDRESS, &MINT_ADDRESS)?;
     token_program.is_program(&spl_token::ID)?;
 
-    // Check amount
+    // Check max mint amount.
+    if amount > MAX_MINT_AMOUNT {
+        return Err(trace(
+            format!(
+                "Cannot mint more than max allowed: {} > {}",
+                amount_to_ui_amount(amount, TOKEN_DECIMALS),
+                amount_to_ui_amount(MAX_MINT_AMOUNT, TOKEN_DECIMALS)
+            )
+            .as_str(),
+            OreMintError::MaxAmountExceeded.into(),
+        ));
+    }
+
+    // Check max supply.
     let remaining_supply = MAX_SUPPLY.saturating_sub(mint.supply());
-    assert!(amount <= remaining_supply, "Amount too large");
-    assert!(amount <= MAX_MINT_AMOUNT, "Amount too large");
+    if amount > remaining_supply {
+        return Err(trace(
+            format!(
+                "Cannot mint more than remaining supply: {} > {}",
+                amount_to_ui_amount(amount, TOKEN_DECIMALS),
+                amount_to_ui_amount(remaining_supply, TOKEN_DECIMALS)
+            )
+            .as_str(),
+            OreMintError::MaxSupplyExceeded.into(),
+        ));
+    }
 
-    // Check rate of minting.
+    // Check mint frequency.
     let slots_since = clock.slot.saturating_sub(authority.last_mint_at);
-    assert!(slots_since >= MIN_SLOTS_BETWEEN_MINT, "Mint too frequent");
+    if slots_since < MIN_SLOTS_BETWEEN_MINT {
+        return Err(trace(
+            format!(
+                "Must wait at least {} slots between mints: {} slots remaining",
+                MIN_SLOTS_BETWEEN_MINT,
+                slots_since.saturating_sub(MIN_SLOTS_BETWEEN_MINT)
+            )
+            .as_str(),
+            OreMintError::MintFrequencyExceeded.into(),
+        ));
+    }
 
-    // Update timestamps
+    // Update timestamp.
     authority.last_mint_at = clock.slot;
 
     // Mint tokens to the treasury.
