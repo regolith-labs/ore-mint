@@ -7,10 +7,10 @@ pub const TOKEN_DECIMALS: u8 = 11;
 /// One ORE token, denominated in indivisible units.
 pub const ONE_ORE: u64 = 10u64.pow(TOKEN_DECIMALS as u32);
 
-/// The maximum amount of ORE tokens that can be minted per mint.
+/// The maximum amount of ORE tokens that can be minted per request.
 pub const MAX_MINT_AMOUNT: u64 = ONE_ORE * 2;
 
-/// The number of slots required between mints.
+/// The number of slots required between mint requests.
 pub const MIN_SLOTS_BETWEEN_MINT: u64 = 150;
 
 /// The maximum token supply (5 million).
