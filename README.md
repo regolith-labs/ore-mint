@@ -6,7 +6,6 @@ ORE Mint manages the mint authority of the ORE token and secures emissions rules
 ## API
 - [`Consts`](api/src/consts.rs) – Program constants.
 - [`Error`](api/src/error.rs) – Custom program errors.
-- [`Event`](api/src/error.rs) – Custom program events.
 - [`Instruction`](api/src/instruction.rs) – Declared instructions and arguments.
 
 ## Instructions
