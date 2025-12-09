@@ -3,10 +3,39 @@
     "name": "ore_mint",
     "instructions": [
         {
-            "name": "mint_ore",
+            "name": "init",
             "discriminant": {
                 "type": "u8",
                 "value": 0
+            },
+            "docs": [
+                "Initializes the authority account.",
+                "Authority PDA seeds: [\"authority\"]."
+            ],
+            "accounts": [
+                {
+                    "name": "signer",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "mint_ore",
+            "discriminant": {
+                "type": "u8",
+                "value": 1
             },
             "docs": [
                 "Mints new ORE tokens to the treasury.",
@@ -46,35 +75,6 @@
                     "type": "u64"
                 }
             ]
-        },
-        {
-            "name": "init",
-            "discriminant": {
-                "type": "u8",
-                "value": 1
-            },
-            "docs": [
-                "Initializes the authority account.",
-                "Authority PDA seeds: [\"authority\"]."
-            ],
-            "accounts": [
-                {
-                    "name": "signer",
-                    "isMut": true,
-                    "isSigner": true
-                },
-                {
-                    "name": "authority",
-                    "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "systemProgram",
-                    "isMut": false,
-                    "isSigner": false
-                }
-            ],
-            "args": []
         }
     ],
     "accounts": [
