@@ -6,6 +6,19 @@ use crate::{
     state::*,
 };
 
+pub fn init(signer: Pubkey) -> Instruction {
+    let authority_address = authority_pda().0;
+    Instruction {
+        program_id: crate::ID,
+        accounts: vec![
+            AccountMeta::new(signer, true),
+            AccountMeta::new(authority_address, false),
+            AccountMeta::new_readonly(system_program::ID, false),
+        ],
+        data: Init {}.to_bytes(),
+    }
+}
+
 pub fn mint_ore(amount: u64) -> Instruction {
     let signer_address = TREASURY_ADDRESS;
     let to_address =
@@ -24,18 +37,5 @@ pub fn mint_ore(amount: u64) -> Instruction {
             amount: amount.to_le_bytes(),
         }
         .to_bytes(),
-    }
-}
-
-pub fn init(signer: Pubkey) -> Instruction {
-    let authority_address = authority_pda().0;
-    Instruction {
-        program_id: crate::ID,
-        accounts: vec![
-            AccountMeta::new(signer, true),
-            AccountMeta::new(authority_address, false),
-            AccountMeta::new_readonly(system_program::ID, false),
-        ],
-        data: Init {}.to_bytes(),
     }
 }
