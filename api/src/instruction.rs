@@ -9,13 +9,13 @@ pub enum OreMintInstruction {
 
 #[repr(C)]
 #[derive(Clone, Copy, Debug, Pod, Zeroable)]
+pub struct Init {}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Pod, Zeroable)]
 pub struct MintORE {
     pub amount: [u8; 8],
 }
 
-#[repr(C)]
-#[derive(Clone, Copy, Debug, Pod, Zeroable)]
-pub struct Init {}
-
-instruction!(OreMintInstruction, MintORE);
 instruction!(OreMintInstruction, Init);
+instruction!(OreMintInstruction, MintORE);
