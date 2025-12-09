@@ -13,8 +13,8 @@ pub const MAX_MINT_AMOUNT: u64 = ONE_ORE * 2;
 /// The number of slots required between mint requests.
 pub const MIN_SLOTS_BETWEEN_MINT: u64 = 150;
 
-/// The maximum token supply (5 million).
-pub const MAX_SUPPLY: u64 = ONE_ORE * 5_000_000;
+/// The maximum token supply (3 million).
+pub const MAX_SUPPLY: u64 = ONE_ORE * 3_000_000;
 
 /// The seed of the automation account PDA.
 pub const AUTHORITY: &[u8] = b"authority";
