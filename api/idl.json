@@ -78,13 +78,18 @@
     "errors": [
         {
             "code": 0,
-            "name": "AmountTooLarge",
-            "msg": "Amount too large"
+            "name": "MaxAmountExceeded",
+            "msg": "Max amount exceeded"
         },
         {
             "code": 1,
-            "name": "MintTooFrequently",
-            "msg": "Mint too frequently"
+            "name": "MaxSupplyExceeded",
+            "msg": "Max supply exceeded"
+        },
+        {
+            "code": 2,
+            "name": "MintFrequencyExceeded",
+            "msg": "Mint frequency exceeded"
         }
     ],
     "metadata": {
