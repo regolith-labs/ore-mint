@@ -1,5 +1,5 @@
 {
-    "version": "0.1.1",
+    "version": "0.1.3",
     "name": "ore_mint",
     "instructions": [
         {
@@ -46,6 +46,35 @@
                     "type": "u64"
                 }
             ]
+        },
+        {
+            "name": "init",
+            "discriminant": {
+                "type": "u8",
+                "value": 1
+            },
+            "docs": [
+                "Initializes the authority account.",
+                "Authority PDA seeds: [\"authority\"]."
+            ],
+            "accounts": [
+                {
+                    "name": "signer",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
         }
     ],
     "accounts": [

@@ -26,3 +26,16 @@ pub fn mint_ore(amount: u64) -> Instruction {
         .to_bytes(),
     }
 }
+
+pub fn init(signer: Pubkey) -> Instruction {
+    let authority_address = authority_pda().0;
+    Instruction {
+        program_id: crate::ID,
+        accounts: vec![
+            AccountMeta::new(signer, true),
+            AccountMeta::new(authority_address, false),
+            AccountMeta::new_readonly(system_program::ID, false),
+        ],
+        data: Init {}.to_bytes(),
+    }
+}

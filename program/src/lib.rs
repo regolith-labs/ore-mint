@@ -1,5 +1,7 @@
+mod init;
 mod mint_ore;
 
+use init::*;
 use mint_ore::*;
 
 use ore_mint_api::instruction::*;
@@ -14,6 +16,7 @@ pub fn process_instruction(
     let (ix, data) = parse_instruction(&ore_mint_api::ID, program_id, data)?;
 
     match ix {
+        OreMintInstruction::Init => process_init(accounts, data)?,
         OreMintInstruction::MintORE => process_mint_ore(accounts, data)?,
     }
 
@@ -23,7 +26,7 @@ pub fn process_instruction(
 entrypoint!(process_instruction);
 
 security_txt! {
-    name: "ORE",
+    name: "ORE Mint",
     project_url: "https://ore.supply",
     contacts: "email:hardhatchad@gmail.com,discord:hardhatchad",
     policy: "https://github.com/regolith-labs/ore-mint/blob/master/SECURITY.md",

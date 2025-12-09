@@ -53,7 +53,7 @@ pub fn process_mint_ore(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramRes
             format!(
                 "Must wait at least {} slots between mints: {} slots remaining",
                 MIN_SLOTS_BETWEEN_MINT,
-                slots_since.saturating_sub(MIN_SLOTS_BETWEEN_MINT)
+                MIN_SLOTS_BETWEEN_MINT.saturating_sub(slots_since)
             )
             .as_str(),
             OreMintError::MintFrequencyExceeded.into(),
